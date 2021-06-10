@@ -17,5 +17,9 @@
             return Ok(list);
             //return Problem("username and password does not match");
         }
+        public IActionResult Post()
+        {
+            return Forbid();
+        }
     }
 }
