@@ -7,7 +7,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    [Route("api/[controller]")]
+    [Route("api/[controller]/{Id}")]
     [ApiController]
     public class UserTrainingDataController : ControllerBase
     {

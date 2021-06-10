@@ -6,20 +6,51 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Linq;
 
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        public IActionResult Get(string username,string password)
+        [Route("api/user/createuser")]
+        [HttpPost]
+        public IActionResult CreateUser(Models.User user)
         {
-            var list = new List<string> { username, password };
-            return Ok(list);
-            //return Problem("username and password does not match");
-        }
-        public IActionResult Post()
-        {
+            if(user.Email == null)
+            {
+                return Problem("Email is needed");
+            }
+            else if (user.Username == null)
+            {
+                return Problem("Username is needed");
+            }
+            else if (user.Password == null)
+            {
+                return Problem("Password is needed");
+            }
+            else
+            {
+                var hashedPassword = Functions.hashing.HashPassword(user.Password);
+
+            }
+
             return Forbid();
+        }
+        [HttpPost]
+        public IActionResult Login(Models.User user)
+        {
+            if (user.Email == null||user.Username == null)
+            {
+                return Problem("Username/email is needed");
+            }
+            if (user.Password == null)
+            {
+                return Problem("Password is needed");
+            }
+
+
+            return Forbid();
+
         }
     }
 }
