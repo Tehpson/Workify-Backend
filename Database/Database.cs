@@ -15,7 +15,8 @@
         static string DatabaseFile { get; set; } = @".\Workifydb.db";
 
         public DbSet<Models.User> Users { get; set; }
-        
+        public DbSet<Models.UserTraining> UserTrainings { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var path = Environment
