@@ -31,7 +31,12 @@
             else
             {
                 var hashedPassword = Functions.hashing.HashPassword(user.Password);
-
+                using(var dataList = new Database.Database())
+                {
+                    dataList.Users.Add(new Models.User { Email = user.Email, Password = hashedPassword, Username = user.Username });
+                    dataList.SaveChanges();
+                }
+                return Ok("user Created");
             }
 
             return Forbid();
