@@ -17,12 +17,9 @@ namespace Workify_Backend.Migrations
                     Password = table.Column<string>(type: "TEXT", nullable: true),
                     PublicProfile = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_Users", x => x.Id));
 
-            migrationBuilder.CreateTable(
+            var createTableBuilder = migrationBuilder.CreateTable(
                 name: "UserTrainings",
                 columns: table => new
                 {

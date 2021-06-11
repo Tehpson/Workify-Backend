@@ -1,11 +1,6 @@
 ﻿namespace Workify_Backend.Functions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-
-    internal static class hashing
+    internal static class Hashing
     {
         internal static string HashPassword(string pwd)
         {
