@@ -4,20 +4,22 @@
     using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
 
-    [Route("api/[controller]")]
+    
     [ApiController]
     public class UserController : ControllerBase
     {
+        [Route("api/[controller]")]
+        [HttpGet]
         public IActionResult Get()
         {
             return Ok("OKEJ");
         }
 
         [HttpGet]
-        [Route("api/createuser")]
-        public static string Getuser()
+        [Route("api/user/createuser")]
+        public IActionResult Getuser()
         {
-            return "yeet";
+            return Ok("yeet");
         }
 
         [Route("api/user/createuser")]
@@ -64,6 +66,7 @@
         }
 
         [HttpPost]
+        [Route("api/[controller]")]
         public IActionResult Login(Models.LoginModle user)
         {
             if (user.Email == null)

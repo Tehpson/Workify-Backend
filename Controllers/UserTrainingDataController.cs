@@ -2,14 +2,14 @@
 {
     using Microsoft.AspNetCore.Mvc;
 
-    [Route("api/user/{Id}/WorkoutData/")]
     [ApiController]
     public class UserTrainingDataController : ControllerBase
     {
         [HttpGet]
-        [Route("api/user/{userId}/WorkoutData/")]
+        [Route("api/user/{userId}/WorkoutData")]
         public IActionResult GetAll(string userId)
         {
+            return Ok("yeey");
             return NotFound();
         }
 
