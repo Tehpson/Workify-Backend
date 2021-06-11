@@ -8,9 +8,9 @@ using Workify_Backend.Database;
 
 namespace Workify_Backend.Migrations
 {
-    [DbContext(typeof(Database))]
-    [Migration("20210611000632_Init")]
-    partial class Init
+    [DbContext(typeof(WorkifyDatabase))]
+    [Migration("20210611074017_int")]
+    partial class @int
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

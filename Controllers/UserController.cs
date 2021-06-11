@@ -31,7 +31,7 @@
             else
             {
                 var hashedPassword = Functions.hashing.HashPassword(user.Password);
-                using(var dataList = new Database.Database())
+                using(var dataList = new Database.WorkifyDatabase())
                 {
                     dataList.Users.Add(new Models.User { Email = user.Email, Password = hashedPassword, Username = user.Username });
                     dataList.SaveChanges();

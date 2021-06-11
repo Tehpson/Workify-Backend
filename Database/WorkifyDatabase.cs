@@ -10,7 +10,7 @@
     using System.Threading.Tasks;
     using System.IO;
 
-    public class Database : DbContext
+    public class WorkifyDatabase : DbContext
     {
         static string DatabaseFile { get; set; } = @".\Workifydb.db";
 
