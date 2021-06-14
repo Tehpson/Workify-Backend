@@ -8,26 +8,46 @@
     {
         [HttpGet]
         [Route("api/user/{userId}/WorkoutData")]
-        public IActionResult GetAll(string userId)
+        public IActionResult GetAll(ulong userId)
         {
-            return Ok("yeey");
-            return NotFound();
+            Models.User user;
+            using(var db = new Database.WorkifyDatabase())
+            {
+                user = db.Users.FirstOrDefault(x => x.Id == userId);
+            if (user == null) return NotFound("user Not Found");
+            else
+            {
+                    var data = db.UserTrainings.Where(x => x.User == user).ToList();
+                    return Ok(data);
+            }
+            }
         }
 
         [HttpGet]
         [Route("api/user/{userId}/WorkoutData/{workoutid}")]
-        public IActionResult GetAll(string userId, int workoutid)
+        public IActionResult GetAll(ulong userId, ulong workoutid)
         {
-            return NotFound();
+            Models.User user;
+            using (var db = new Database.WorkifyDatabase())
+            {
+                user = db.Users.FirstOrDefault(x => x.Id == userId);
+                if (user == null) return NotFound("user Not Found");
+                else
+                {
+                    var data = db.UserTrainings.Where(x => x.User == user && x.Id == workoutid).ToList();
+                    return Ok(data);
+                }
+            }
         }
 
         [HttpPost]
         [Route("api/user/{userId}/WorkoutData")]
         public IActionResult Post(ulong userID, Models.UserTraining userTraining)
         {
+            Models.User user;
             using (var db = new Database.WorkifyDatabase())
             {
-                var user = db.Users.FirstOrDefault(x => x.Id == userID);
+                user = db.Users.FirstOrDefault(x => x.Id == userID);
                 if(user == null)
                 {
                     return NotFound("user Not found");
@@ -55,7 +75,12 @@
                 var dateteim = System.DateTime.Now;
 
             }
-            return NotFound();
+            using (var db = new Database.WorkifyDatabase())
+            {
+                db.UserTrainings.Add(new Models.UserTraining { User = user, Comment = userTraining.Comment, Date = System.DateTime.Now.ToString(), Layout = 0, Title = userTraining.Title, Time = userTraining.Time, ImgPath = "" });
+                db.SaveChanges();
+            }
+            return Ok("succsefull");
         }
     }
 }
