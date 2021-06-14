@@ -66,7 +66,7 @@
         }
 
         [HttpPost]
-        [Route("api/[controller]")]
+        [Route("api/user/login")]
         public IActionResult Login(Models.LoginModle user)
         {
             if (user.Email == null)
