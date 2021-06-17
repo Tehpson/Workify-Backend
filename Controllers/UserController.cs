@@ -1,15 +1,18 @@
 ﻿namespace Workify_Backend.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
+    using System.Web.Http.Cors;
 
-    
     [ApiController]
+    [EnableCors("*", "*", "*")]
     public class UserController : ControllerBase
     {
         [Route("api/[controller]")]
         [HttpGet]
+
         public IActionResult Get()
         {
             return Ok("OKEJ");
@@ -63,6 +66,7 @@
         [Route("api/user/login")]
         public IActionResult Login(Models.LoginModle user)
         {
+            var responsList = new List<string>();
             if (user.Email == null)
             {
                 return Problem("Username/email is needed");
@@ -84,7 +88,9 @@
                 }
                 else
                 {
-                    return Ok(userFromDB.Id);
+                    responsList.Add(userFromDB.Username);
+                    responsList.Add(userFromDB.Id.ToString());
+                    return Ok(responsList);
                 }
             }
         }

@@ -2,8 +2,10 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using System.Linq;
+    using System.Web.Http.Cors;
 
     [ApiController]
+    [EnableCors("*", "*", "*")]
     public class UserTrainingDataController : ControllerBase
     {
         [HttpGet]
