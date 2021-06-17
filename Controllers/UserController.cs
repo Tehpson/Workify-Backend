@@ -15,12 +15,6 @@
             return Ok("OKEJ");
         }
 
-        [HttpGet]
-        [Route("api/user/createuser")]
-        public IActionResult Getuser()
-        {
-            return Ok("yeet");
-        }
 
         [Route("api/user/createuser")]
         [HttpPost]
