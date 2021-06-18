@@ -9,8 +9,8 @@ using Workify_Backend.Database;
 namespace Workify_Backend.Migrations
 {
     [DbContext(typeof(WorkifyDatabase))]
-    [Migration("20210611074017_int")]
-    partial class @int
+    [Migration("20210618065937_gf")]
+    partial class gf
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,9 @@ namespace Workify_Backend.Migrations
                     b.Property<ulong>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Bio")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
@@ -56,6 +59,9 @@ namespace Workify_Backend.Migrations
                     b.Property<string>("ImgPath")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Layout")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Time")
                         .HasColumnType("TEXT");
 
@@ -74,11 +80,14 @@ namespace Workify_Backend.Migrations
 
             modelBuilder.Entity("Workify_Backend.Models.UserTraining", b =>
                 {
-                    b.HasOne("Workify_Backend.Models.User", "User")
-                        .WithMany()
+                    b.HasOne("Workify_Backend.Models.User", null)
+                        .WithMany("Trainings")
                         .HasForeignKey("UserId");
+                });
 
-                    b.Navigation("User");
+            modelBuilder.Entity("Workify_Backend.Models.User", b =>
+                {
+                    b.Navigation("Trainings");
                 });
 #pragma warning restore 612, 618
         }

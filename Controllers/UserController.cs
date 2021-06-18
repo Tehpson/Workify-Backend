@@ -10,12 +10,27 @@
     [EnableCors("*", "*", "*")]
     public class UserController : ControllerBase
     {
-        [Route("api/[controller]")]
+        [Route("api/[controller]/{userID}")]
         [HttpGet]
 
-        public IActionResult Get()
+        public IActionResult Get(string userID)
         {
-            return Ok("OKEJ");
+            using(var db = new Database.WorkifyDatabase())
+            {
+                if(userID == null || userID == "undefined")
+                {
+                    return Problem("userId is not found");
+                }
+                var user = db.Users.FirstOrDefault(x => x.Id == ulong.Parse(userID));
+                if (user != null )
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    return NotFound("user not found");
+                }
+            }
         }
 
 
