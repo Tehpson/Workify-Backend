@@ -18,21 +18,13 @@ namespace Workify_Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public static void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(action =>
-               action.AddPolicy("AllowOrigins", builder =>
-                   builder
-                       //.WithOrigins("http://localhost:4200")
-                       .SetIsOriginAllowed((host) => true)
-                       .AllowAnyMethod()
-                       .AllowAnyHeader()
-                       .AllowCredentials()
-               )
-           );
+            services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
 
             services.AddControllers();
 
         }
 
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -40,22 +32,15 @@ namespace Workify_Backend
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("AllowOrigins");
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseCors();
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }

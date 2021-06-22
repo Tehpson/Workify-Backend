@@ -1,12 +1,9 @@
 ﻿namespace Workify_Backend.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Web.Http.Cors;
 
     [ApiController]
-    [EnableCors("*", "*", "*")]
     public class UserTrainingDataController : ControllerBase
     {
         [HttpGet]
@@ -20,11 +17,7 @@
             if (user == null) return NotFound("user Not Found");
             else
             {
-                    if(user.Trainings == null)
-                    {
-                        return Ok(new List<string>());
-                    }
-                    var data = user.Trainings.ToList();
+                    var data = db.UserTrainings.Where(x => x.User == user).ToList();
                     return Ok(data);
             }
             }
@@ -41,8 +34,7 @@
                 if (user == null) return NotFound("user Not Found");
                 else
                 {
-                    var data = user.Trainings.Where(x => x.Id == workoutid).ToList();
-                   
+                    var data = db.UserTrainings.Where(x => x.User == user && x.Id == workoutid).ToList();
                     return Ok(data);
                 }
             }
@@ -62,7 +54,7 @@
                 }
             }
 
-            if(userTraining.Title == null || userTraining.Title == "")
+            if(userTraining.Title == null)
             {
                 return Problem("Title need to be specified");
             }
@@ -70,11 +62,11 @@
             {
                 return Problem("title to long");
             }
-            else if(userTraining.Time == null || userTraining.Time == "0")
+            else if(userTraining.Time == null)
             {
                 return Problem("Time need to be specified");
             }
-            else if(userTraining.Comment.Length > 200)
+            else if(userTraining.Comment.Length > 250)
             {
                 return Problem("comment to long");
             }
@@ -85,12 +77,8 @@
             }
             using (var db = new Database.WorkifyDatabase())
             {
-                try
-                {
-                    user.Trainings.Add(new Models.UserTraining { Comment = userTraining.Comment, Date = System.DateTime.Now.ToString(), Layout = userTraining.Layout, Title = userTraining.Title, Time = userTraining.Time, ImgPath = "" });
-                    db.SaveChanges();
-                }
-                catch { System.Console.WriteLine("ERROR"); }
+                db.UserTrainings.Add(new Models.UserTraining { User = user, Comment = userTraining.Comment, Date = System.DateTime.Now.ToString(), Layout = 0, Title = userTraining.Title, Time = userTraining.Time, ImgPath = "" });
+                db.SaveChanges();
             }
             return Ok("succsefull");
         }

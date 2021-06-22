@@ -1,13 +1,11 @@
 ﻿namespace Workify_Backend.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
-    using System.Web.Http.Cors;
 
+    
     [ApiController]
-    [EnableCors("*", "*", "*")]
     public class UserController : ControllerBase
     {
         [Route("api/[controller]/{userID}")]
@@ -15,14 +13,14 @@
 
         public IActionResult Get(string userID)
         {
-            using(var db = new Database.WorkifyDatabase())
+            using (var db = new Database.WorkifyDatabase())
             {
-                if(userID == null || userID == "undefined")
+                if (userID == null || userID == "undefined")
                 {
                     return Problem("userId is not found");
                 }
                 var user = db.Users.FirstOrDefault(x => x.Id == ulong.Parse(userID));
-                if (user != null )
+                if (user != null)
                 {
                     return Ok(user);
                 }
@@ -81,7 +79,6 @@
         [Route("api/user/login")]
         public IActionResult Login(Models.LoginModle user)
         {
-            var responsList = new List<string>();
             if (user.Email == null)
             {
                 return Problem("Username/email is needed");
@@ -103,9 +100,7 @@
                 }
                 else
                 {
-                    responsList.Add(userFromDB.Username);
-                    responsList.Add(userFromDB.Id.ToString());
-                    return Ok(responsList);
+                    return Ok(userFromDB.Id);
                 }
             }
         }
