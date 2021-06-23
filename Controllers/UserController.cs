@@ -1,16 +1,13 @@
 ﻿namespace Workify_Backend.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
 
-    
     [ApiController]
     public class UserController : ControllerBase
     {
         [Route("api/[controller]/{userID}")]
         [HttpGet]
-
         public IActionResult Get(string userID)
         {
             using (var db = new Database.WorkifyDatabase())
@@ -30,7 +27,6 @@
                 }
             }
         }
-
 
         [Route("api/user/createuser")]
         [HttpPost]
@@ -90,7 +86,7 @@
             using (var db = new Database.WorkifyDatabase())
             {
                 var userFromDB = db.Users.FirstOrDefault(x => x.Email == user.Email);
-                if(userFromDB == null)
+                if (userFromDB == null)
                 {
                     return NotFound("username/email not found");
                 }

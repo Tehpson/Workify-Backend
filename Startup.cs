@@ -21,7 +21,6 @@ namespace Workify_Backend
             services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
 
             services.AddControllers();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

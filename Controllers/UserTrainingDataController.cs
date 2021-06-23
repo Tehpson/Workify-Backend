@@ -11,15 +11,15 @@
         public IActionResult GetAll(ulong userId)
         {
             Models.User user;
-            using(var db = new Database.WorkifyDatabase())
+            using (var db = new Database.WorkifyDatabase())
             {
                 user = db.Users.FirstOrDefault(x => x.Id == userId);
-            if (user == null) return NotFound("user Not Found");
-            else
-            {
-                    var data = user.trainings;
+                if (user == null) return NotFound("user Not Found");
+                else
+                {
+                    var data = user.Trainings;
                     return Ok(data);
-            }
+                }
             }
         }
 
@@ -34,7 +34,7 @@
                 if (user == null) return NotFound("user Not Found");
                 else
                 {
-                    var data = user.trainings.Where(x=>x.Id == workoutid);
+                    var data = user.Trainings.Where(x => x.Id == workoutid);
                     return Ok(data);
                 }
             }
@@ -48,13 +48,13 @@
             using (var db = new Database.WorkifyDatabase())
             {
                 user = db.Users.FirstOrDefault(x => x.Id == userID);
-                if(user == null)
+                if (user == null)
                 {
                     return NotFound("user Not found");
                 }
             }
 
-            if(userTraining.Title == null)
+            if (userTraining.Title == null)
             {
                 return Problem("Title need to be specified");
             }
@@ -62,22 +62,21 @@
             {
                 return Problem("title to long");
             }
-            else if(userTraining.Time == null)
+            else if (userTraining.Time == null)
             {
                 return Problem("Time need to be specified");
             }
-            else if(userTraining.Comment.Length > 250)
+            else if (userTraining.Comment.Length > 250)
             {
                 return Problem("comment to long");
             }
             else
             {
                 var dateteim = System.DateTime.Now;
-
             }
             using (var db = new Database.WorkifyDatabase())
             {
-                user.trainings.Add(new Models.UserTraining { Comment = userTraining.Comment, Date = System.DateTime.Now.ToString(), Layout = 0, Title = userTraining.Title, Time = userTraining.Time, ImgPath = "" });
+                user.Trainings.Add(new Models.UserTraining { Comment = userTraining.Comment, Date = System.DateTime.Now.ToString(), Layout = 0, Title = userTraining.Title, Time = userTraining.Time, ImgPath = "" });
                 db.SaveChanges();
             }
             return Ok("succsefull");
