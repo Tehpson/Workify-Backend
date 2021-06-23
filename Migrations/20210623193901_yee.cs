@@ -2,7 +2,7 @@
 
 namespace Workify_Backend.Migrations
 {
-    public partial class @int : Migration
+    public partial class yee : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,22 +15,27 @@ namespace Workify_Backend.Migrations
                     Email = table.Column<string>(type: "TEXT", nullable: true),
                     Username = table.Column<string>(type: "TEXT", nullable: true),
                     Password = table.Column<string>(type: "TEXT", nullable: true),
-                    PublicProfile = table.Column<bool>(type: "INTEGER", nullable: false)
+                    PublicProfile = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Bio = table.Column<string>(type: "TEXT", nullable: true)
                 },
-                constraints: table => table.PrimaryKey("PK_Users", x => x.Id));
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
 
-            var createTableBuilder = migrationBuilder.CreateTable(
+            migrationBuilder.CreateTable(
                 name: "UserTrainings",
                 columns: table => new
                 {
                     Id = table.Column<ulong>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<ulong>(type: "INTEGER", nullable: true),
                     Title = table.Column<string>(type: "TEXT", nullable: true),
                     Date = table.Column<string>(type: "TEXT", nullable: true),
                     Time = table.Column<string>(type: "TEXT", nullable: true),
                     Comment = table.Column<string>(type: "TEXT", nullable: true),
-                    ImgPath = table.Column<string>(type: "TEXT", nullable: true)
+                    ImgPath = table.Column<string>(type: "TEXT", nullable: true),
+                    Layout = table.Column<int>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<ulong>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -1,4 +1,6 @@
-﻿namespace Workify_Backend.Models
+﻿using System.Collections.Generic;
+
+namespace Workify_Backend.Models
 {
     public class User
     {
@@ -7,7 +9,8 @@
         public string Username { get; set; }
         public string Password { get; set; }
         public bool PublicProfile { get; set; }
-
         public string Bio { get; set; }
+
+        public List<UserTraining> trainings { get; set; }
     }
 }

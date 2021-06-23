@@ -7,7 +7,7 @@
     public class UserTrainingDataController : ControllerBase
     {
         [HttpGet]
-        [Route("api/user/{userId}/WorkoutData")]
+        [Route("api/user/{userId}/workoutdata")]
         public IActionResult GetAll(ulong userId)
         {
             Models.User user;
@@ -17,14 +17,14 @@
             if (user == null) return NotFound("user Not Found");
             else
             {
-                    var data = db.UserTrainings.Where(x => x.User == user).ToList();
+                    var data = user.trainings;
                     return Ok(data);
             }
             }
         }
 
         [HttpGet]
-        [Route("api/user/{userId}/WorkoutData/{workoutid}")]
+        [Route("api/user/{userId}/workoutdata/{workoutid}")]
         public IActionResult GetAll(ulong userId, ulong workoutid)
         {
             Models.User user;
@@ -34,14 +34,14 @@
                 if (user == null) return NotFound("user Not Found");
                 else
                 {
-                    var data = db.UserTrainings.Where(x => x.User == user && x.Id == workoutid).ToList();
+                    var data = user.trainings.Where(x=>x.Id == workoutid);
                     return Ok(data);
                 }
             }
         }
 
         [HttpPost]
-        [Route("api/user/{userId}/WorkoutData")]
+        [Route("api/user/{userId}/workoutdata")]
         public IActionResult Post(ulong userID, Models.UserTraining userTraining)
         {
             Models.User user;
@@ -77,7 +77,7 @@
             }
             using (var db = new Database.WorkifyDatabase())
             {
-                db.UserTrainings.Add(new Models.UserTraining { User = user, Comment = userTraining.Comment, Date = System.DateTime.Now.ToString(), Layout = 0, Title = userTraining.Title, Time = userTraining.Time, ImgPath = "" });
+                user.trainings.Add(new Models.UserTraining { Comment = userTraining.Comment, Date = System.DateTime.Now.ToString(), Layout = 0, Title = userTraining.Title, Time = userTraining.Time, ImgPath = "" });
                 db.SaveChanges();
             }
             return Ok("succsefull");
