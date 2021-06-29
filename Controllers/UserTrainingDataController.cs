@@ -54,7 +54,7 @@
                     return NotFound("user Not found");
                 }
 
-                if (userTraining.Title == null)
+                if (userTraining.Title == null || userTraining.Title == "NaN" ||userTraining.Title == "")
                 {
                     return Problem("Title need to be specified");
                 }
@@ -62,7 +62,7 @@
                 {
                     return Problem("title to long");
                 }
-                else if (userTraining.Time == null)
+                else if (userTraining.Time == null || userTraining.Time == "NaN" || userTraining.Time == "0")
                 {
                     return Problem("Time need to be specified");
                 }
@@ -74,7 +74,7 @@
                 {
                     var dateteim = System.DateTime.Now;
                 }
-                user.Trainings.Add(new Models.UserTraining { Comment = userTraining.Comment, Date = System.DateTime.Now.ToString(), Layout = 0, Title = userTraining.Title, Time = userTraining.Time, ImgPath = "" });
+                user.Trainings.Add(new Models.UserTraining { Comment = userTraining.Comment, Date = System.DateTime.Now.ToString(), Layout = userTraining.Layout, Title = userTraining.Title, Time = userTraining.Time, ImgPath = "" });
                 db.SaveChanges();
             }
             return Ok("succsefull");
