@@ -32,15 +32,15 @@
         [HttpPost]
         public IActionResult CreateUser(Models.User user)
         {
-            if (user.Email == null)
+            if (user.Email == null || user.Email == "")
             {
                 return Problem("Email is needed");
             }
-            else if (user.Username == null)
+            else if (user.Username == null || user.Username == "")
             {
                 return Problem("Username is needed");
             }
-            else if (user.Password == null)
+            else if (user.Password == null || user.Password == "" )
             {
                 return Problem("Password is needed");
             }
@@ -65,7 +65,7 @@
                         var hashedPassword = Functions.Hashing.HashPassword(user.Password);
                         dataList.Users.Add(new Models.User { Email = user.Email, Password = hashedPassword, Username = user.Username, PublicProfile = true });
                         dataList.SaveChanges();
-                        return Ok("user Created");
+                        return Ok(dataList.Users.FirstOrDefault(x=>x.Email == user.Email).Id);
                     }
                 }
             }
@@ -85,7 +85,7 @@
             }
             using (var db = new Database.WorkifyDatabase())
             {
-                var userFromDB = db.Users.FirstOrDefault(x => x.Email == user.Email);
+                var userFromDB = db.Users.FirstOrDefault(x => x.Email == user.Email || x.Username == user.Email);
                 if (userFromDB == null)
                 {
                     return NotFound("username/email not found");
